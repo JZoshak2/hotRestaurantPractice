@@ -1,0 +1,60 @@
+<!-- //JumboTron
+//Link to Reservation Page
+// Link to Home Page
+
+//Table of Current Reservations
+// Table of Waiting List -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hot Restaurant</title>
+  <!-- Latest compiled and minified CSS & JS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<h1>Hey! Tables!</h1>
+<a href= "/">Home</a>
+<a href= "/reservations">Reservations</a>
+<button id="clear">Clear Data</button>
+
+
+<script type="text/javascript">
+function runTableQuery(){
+
+  // Here we get the location of the root page.
+  // We use this instead of explicitly saying the URL is localhost:3001 because the url will change when we deploy.
+console.log("I'm here!");
+  var currentURL = window.location.origin;
+
+  // The AJAX function uses the URL of our API to GET the data associated with it (initially set to localhost)
+  $.ajax({url: currentURL + "/api/tables", method: "GET"})
+    .done(function(tableData) {
+
+      // Here we are logging the URL so we have access to it for troubleshooting
+      console.log("------------------------------------");
+      console.log("URL: " + currentURL + "/api/tables");
+      console.log("------------------------------------");
+
+      console.log(tableData); //logs data from our API
+      console.log("------------------------------------")
+
+      // Loop through and display each of the customers
+      for (var i=0; i<tableData.length; i++){
+
+        var tableNumber = i + 1;
+        // Then display the remaining fields in the HTML (Section Name, Date, URL)
+        $("body").append('<h2><span class="label label-primary">' + tableNumber + "</span> | " + tableData[i].uniqueID + "</h2>");
+      }
+    });
+}
+runTableQuery();
+
+
+</script>
+</body>
+</html>
